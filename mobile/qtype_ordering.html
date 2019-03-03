@@ -1,4 +1,4 @@
-<section ion-list *ngIf="question.text || question.text === ''" class="qtype-ordering">
+<section class="list qtype-ordering-container qtype-ordering" ion-list *ngIf="question.text || question.text === ''">
         <ion-item text-wrap>
                 <p>
                     <core-format-text [component]="component" [componentId]="componentId" [text]="question.text"></core-format-text>
