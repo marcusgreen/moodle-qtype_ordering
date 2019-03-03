@@ -34,7 +34,8 @@ var result = {
         const div = document.createElement('div');
         div.innerHTML = this.question.html;
          // Get question questiontext.
-        const questiontext = div.querySelector('.qtext');
+         debugger;
+        var questiontext = div.querySelector('.qtext');
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         // Only do this if you want to use the standard classes
