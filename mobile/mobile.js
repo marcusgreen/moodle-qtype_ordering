@@ -22,58 +22,51 @@
  * https://github.com/moodlehq/moodlemobile2/blob/v3.5.0/src/addon/qtype/ddwtos/classes/ddwtos.ts
  */
 
+ debugger;
 
 var that = this;
 var result = {
-
     componentInit: function() {
+
+        // This.question should be provided to us here.
+        // This.question.html (string) is the main source of data, presumably prepared by the renderer.
+        // There are also other useful objects with question like infoHtml which is used by the
+        // page to display the question state, but with which we need do nothing.
+        // This code just prepares bits of this.question.html storing it in the question object ready for
+        // passing to the template (oumr.html).
+        // Note this is written in 'standard' javascript rather than ES6. Both work.
+
         if (!this.question) {
-            console.warn('Aborting because of no question received.');
             return that.CoreQuestionHelperProvider.showComponentError(that.onAbort);
         }
-        const div = document.createElement('div');
+
+        // Create a temporary div to ease extraction of parts of the provided html.
+        var div = document.createElement('div');
         div.innerHTML = this.question.html;
-         // Get question questiontext.
-         //qtype_ordering
-         alert('qtype_ordering');
-         debugger;
+
+        // Replace Moodle's correct/incorrect classes, feedback and icons with mobile versions.
+        that.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
+        that.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
+        that.CoreQuestionHelperProvider.treatCorrectnessIcons(div);
+
+        // Get useful parts of the provided question html data.
         var questiontext = div.querySelector('.qtext');
+        var prompt = div.querySelector('.prompt');
+        var answeroptions = div.querySelector('.answer');
 
-        // Replace Moodle's correct/incorrect and feedback classes with our own.
-        // Only do this if you want to use the standard classes
-        this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
-        this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
-
-         // Treat the correct/incorrect icons.
-        this.CoreQuestionHelperProvider.treatCorrectnessIcons(div);
-
- 
-        if (div.querySelector('.readonly') !== null) {
-            this.question.readonly = true;
+        // Add the useful parts back into the question object ready for rendering in the template.
+        this.question.text = questiontext.innerHTML;
+        // Without the question text there is no point in proceeding.
+        if (typeof this.question.text === 'undefined') {
+            return that.CoreQuestionHelperProvider.showComponentError(that.onAbort);
         }
-        if (div.querySelector('.feedback') !== null) {
-            this.question.feedback = div.querySelector('.feedback');
-            this.question.feedbackHTML = true;
+        if (prompt !== null) {
+            this.question.prompt = prompt.innerHTML;
         }
-        
-         this.question.text = this.CoreDomUtilsProvider.getContentsOfElement(div, '.qtext');
-
-        if (typeof this.question.text == 'undefined') {
-            this.logger.warn('Aborting because of an error parsing question.', this.question.name);
-            return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
-        }
-        
-        // Called by the reference in *.html to 
-        // (afterRender)="questionRendered()
-        this.questionRendered = function questionRendered() {
-            //do stuff that needs the question rendered before it can run.
-        }
-
-        // Wait for the DOM to be rendered.
-        setTimeout(() => {
-            //put stuff here that will be pulled from the rendered question
-        });
+   
         return true;
     }
 };
+
+// This next line is required as is (because of an eval step that puts this result object into the global scope).
 result;
