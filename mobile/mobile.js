@@ -35,6 +35,7 @@ var result = {
         div.innerHTML = this.question.html;
          // Get question questiontext.
          //qtype_ordering
+         alert('qtype_ordering');
          debugger;
         var questiontext = div.querySelector('.qtext');
 
