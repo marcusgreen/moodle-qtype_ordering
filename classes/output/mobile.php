@@ -41,7 +41,7 @@ class mobile {
             'templates' => [
                 [
                     'id' => 'main',
-                    'html' => file_get_contents($CFG->dirroot .'/question/type/ordering/mobile/qtype-gapfill.html')
+                    'html' => file_get_contents($CFG->dirroot .'/question/type/ordering/mobile/qtype-ordering.html')
                     ]
             ],
             'javascript' => file_get_contents($CFG->dirroot . '/question/type/ordering/mobile/mobile.js')
