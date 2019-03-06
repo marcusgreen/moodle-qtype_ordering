@@ -51,7 +51,6 @@ var result = {
 
         // Get useful parts of the provided question html data.
         var questiontext = div.querySelector('.qtext');
-        var prompt = div.querySelector('.prompt');
         var answeroptions = div.querySelector('.answer');
 
         // Add the useful parts back into the question object ready for rendering in the template.
@@ -60,8 +59,9 @@ var result = {
         if (typeof this.question.text === 'undefined') {
             return that.CoreQuestionHelperProvider.showComponentError(that.onAbort);
         }
-        if (prompt !== null) {
-            this.question.prompt = prompt.innerHTML;
+        this.questionRendered = function questionRendered() {
+            var self = this;
+            var sortables = this.componentContainer.querySelectorAll('.sortableitem');
         }
    
         return true;
