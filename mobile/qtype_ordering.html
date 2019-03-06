@@ -3,5 +3,7 @@
                 <p>
                     <core-format-text [component]="component" [componentId]="componentId" [text]="question.text"></core-format-text>
                 </p>
+                <core-format-text [component]="component" [componentId]="componentId"
+                [text]="question.sortables" (afterRender)="questionRendered()"></core-format-text>
         </ion-item>        
 </section>
