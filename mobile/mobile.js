@@ -59,7 +59,7 @@ var result = {
         if (typeof this.question.text === 'undefined') {
             return that.CoreQuestionHelperProvider.showComponentError(that.onAbort);
         }
-        var sortableitems = div.querySelector('.sortableitem');
+        var sortableitems = div.querySelectorAll('.sortableitem');
 
         this.questionRendered = function questionRendered() {
             var self = this;
